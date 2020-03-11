@@ -22,6 +22,18 @@ Then('edit the test site', () => {
   cy.get('#btnEdit1').click();
 });
 
+Then('ignore the popup as the test student', () => {
+  cy.get('#popup-later-button').click();
+});
+
+Then('ignore the popup as the test instructor', () => {
+  cy.get('#qtip-1 > div.qtip-titlebar > a > i').click();
+});
+
+Then('go to the membership page', () => {
+  cy.get('[title^="Membership - For viewing and modifying your membership in sites of which you are a participant or that you may join"]').click()
+});
+
 And('delete the test site', () => {
   cy.get('#toggleAllSelected').check();
   cy.get('#btnHardDelete1').click();
@@ -40,10 +52,19 @@ And('create the test site', () => {
 
 And('add the test instructor to the test site', () => {
   cy.get('[title^="Add Participants"]').click();
-  cy.get('[name^="content\:\:officialAccountParticipant"]').type('sakai-cypress-instructor');
-  cy.get('[value^="differentRole"]').click();
+  cy.get('textarea[name^="content\:\:officialAccountParticipant"]').type('sakai-cypress-instructor');
   cy.get('[value^="Continue"]').click();
   cy.get('[value^="maintain"]').click();
+  cy.get('[value^="Continue"]').click();
+  cy.get('[value^="Continue"]').click();
+  cy.get('[value^="Finish"]').click();
+});
+
+And('add the test student to the test site', () => {
+  cy.get('[title^="Add Participants"]').click();
+  cy.get('textarea[name^="content\:\:officialAccountParticipant"]').type('sakai-cypress-student');
+  cy.get('[value^="Continue"]').click();
+  cy.get('[value^="access"]').click();
   cy.get('[value^="Continue"]').click();
   cy.get('[value^="Continue"]').click();
   cy.get('[value^="Finish"]').click();

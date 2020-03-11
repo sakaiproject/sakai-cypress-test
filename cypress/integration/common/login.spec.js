@@ -10,6 +10,18 @@ Then('login as admin', () => {
   cy.get('#submit').click();
 });
 
+Then('login as the test instructor', () => {
+  cy.get('#eid').type('sakai-cypress-instructor');
+  cy.get('#pw').type('sakai-cypress-instructor');
+  cy.get('#submit').click();
+});
+
+Then('login as the test student', () => {
+  cy.get('#eid').type('sakai-cypress-student');
+  cy.get('#pw').type('sakai-cypress-student');
+  cy.get('#submit').click();
+});
+
 And('I can see the message of the day', () => {
   cy.contains('Message Of The Day');
 });
