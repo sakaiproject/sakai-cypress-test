@@ -1,27 +1,34 @@
-import { Before, Given, Then } from 'cypress-cucumber-preprocessor/steps';
+import { Given, Then, And, Before, After } from 'cypress-cucumber-preprocessor/steps';
 
-Given('I am at the portal', () => {
+export function login(username) {
   cy.visit('https://qa20-mysql.nightly.sakaiproject.org/portal');
-});
-
-Then('login as admin', () => {
-  cy.get('#eid').type('admin');
-  cy.get('#pw').type('admin');
+  cy.get('#eid').type(username);
+  cy.get('#pw').type(username);
   cy.get('#submit').click();
+  //cy.get('#popup-later-button').click();
+}
+
+export function logout() {
+  cy.get('#loginUser').click();
+  cy.get('#loginLink1').click();
+}
+
+Before({ tags: '@admin' }, () => {
+  login('admin');
 });
 
-Then('login as the test instructor', () => {
-  cy.get('#eid').type('sakai-cypress-instructor');
-  cy.get('#pw').type('sakai-cypress-instructor');
-  cy.get('#submit').click();
+After({ tags: '@admin' }, () => {
+  logout();
 });
 
-Then('login as the test student', () => {
-  cy.get('#eid').type('sakai-cypress-student');
-  cy.get('#pw').type('sakai-cypress-student');
-  cy.get('#submit').click();
+Given('I am {string}', (username) => {
+  login(username);
 });
 
-And('I can see the message of the day', () => {
-  cy.contains('Message Of The Day');
+And('I can see {string}', (string) => {
+  cy.contains(string);
+});
+
+Then('logout', () => {
+  logout();
 });
