@@ -42,16 +42,24 @@ export function addUserToSite(username, sitename, type) {
   cy.get('[value^="Finish"]').click();
 }
 
+export function goToSite(sitename) {
+  cy.visit('https://qa20-mysql.nightly.sakaiproject.org/portal');
+  cy.get('.all-sites-icon').last().click();
+  cy.get('#txtSearch').type(sitename);
+  cy.get(`[title^="${sitename}"]`).click();
+}
+
 Before({ tags: '@site' }, function() {
   this.sitename = `cypress-${uuid4().split('-')[0]}`;
   this.instructor = `cypress-instructor-${uuid4()}`;
   this.student = `cypress-student-${uuid4()}`;
   login('admin');
+  createSite(this.sitename);
   createUser(this.instructor, 'maintain');
   createUser(this.student);
-  createSite(this.sitename);
   addUserToSite(this.instructor, this.sitename, 'maintain');
   addUserToSite(this.student, this.sitename);
+  goToSite(this.sitename);
   logout();
 });
 
@@ -66,7 +74,4 @@ After({ tags: '@site' }, function() {
 Then('create site {string}', createSite);
 Then('add user {string} to site {string}', addUserToSite);
 Then('delete site {string}', deleteSite);
-
-Then('add tool {string}', (toolname) => {
-
-});
+Then('go to site {string}', goToSite);

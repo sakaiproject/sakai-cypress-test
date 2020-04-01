@@ -17,18 +17,12 @@ Before({ tags: '@admin' }, () => {
   login('admin');
 });
 
-After({ tags: '@admin' }, () => {
-  logout();
-});
+After({ tags: '@admin' }, logout);
 
-Given('I am {string}', (username) => {
-  login(username);
-});
+Given('I am {string}', login);
 
 And('I can see {string}', (string) => {
   cy.contains(string);
 });
 
-Then('logout', () => {
-  logout();
-});
+Then('logout', logout);
