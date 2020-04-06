@@ -43,4 +43,4 @@ export function addTool(toolname) {
   cy.get('#revise').click();
 }
 
-Then('add tool {string}', addTool);
+Then('add the {string} tool', addTool);

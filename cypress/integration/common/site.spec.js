@@ -3,6 +3,8 @@ import { Then, Before, After } from 'cypress-cucumber-preprocessor/steps';
 import { login, logout } from './login.spec.js';
 import { createUser, removeUser } from './user.spec.js';
 
+export const STATE = { };
+
 export function createSite(sitename) {
   cy.get('[title^="Worksite Setup"]').click();
   cy.get('[title^="Create New Site"]').click();
@@ -46,32 +48,46 @@ export function goToSite(sitename) {
   cy.visit('https://qa20-mysql.nightly.sakaiproject.org/portal');
   cy.get('.all-sites-icon').last().click();
   cy.get('#txtSearch').type(sitename);
-  cy.get(`[title^="${sitename}"]`).click();
+  cy.get(`[title^="${sitename}"]`).last().click();
 }
 
 Before({ tags: '@site' }, function() {
-  this.sitename = `cypress-${uuid4().split('-')[0]}`;
-  this.instructor = `cypress-instructor-${uuid4()}`;
-  this.student = `cypress-student-${uuid4()}`;
+  STATE.sitename = `cypress-${uuid4().split('-')[0]}`;
+  STATE.instructor = `cypress-instructor-${uuid4()}`;
+  STATE.student = `cypress-student-${uuid4()}`;
   login('admin');
-  createSite(this.sitename);
-  createUser(this.instructor, 'maintain');
-  createUser(this.student);
-  addUserToSite(this.instructor, this.sitename, 'maintain');
-  addUserToSite(this.student, this.sitename);
-  goToSite(this.sitename);
+  createSite(STATE.sitename);
+  createUser(STATE.instructor, 'maintain');
+  createUser(STATE.student);
+  addUserToSite(STATE.instructor, STATE.sitename, 'maintain');
+  addUserToSite(STATE.student, STATE.sitename);
   logout();
 });
 
 After({ tags: '@site' }, function() {
   login('admin');
-  deleteSite(this.sitename);
-  removeUser(this.instructor);
-  removeUser(this.student);
+  deleteSite(STATE.sitename);
+  delete STATE.sitename;
+  removeUser(STATE.instructor);
+  delete STATE.instructor;
+  removeUser(STATE.student);
+  delete STATE.student;
   logout();
 });
 
 Then('create site {string}', createSite);
-Then('add user {string} to site {string}', addUserToSite);
+Then('add user {string} to site {string} {string}', addUserToSite);
 Then('delete site {string}', deleteSite);
 Then('go to site {string}', goToSite);
+
+Given('I am the instructor', function() {
+  login(STATE.instructor);
+});
+
+Given('I am the student', function() {
+  login(STATE.student);
+});
+
+Then('go to the site', function() {
+  goToSite(STATE.sitename);
+});

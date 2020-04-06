@@ -1,6 +1,8 @@
 Feature: Tool
 
+  @site
   Scenario: This is a test scenario
-    Given I am "admin"
-    Then go to site "cypress-71a4615c"
-    Then add tool "announcements"
+    Given I am the instructor
+    Then go to the site
+    Then add the "announcements" tool
+    Then logout
