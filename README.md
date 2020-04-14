@@ -1,5 +1,7 @@
 # Sakai Automated QA
 
+For now, I recommend using Electron, the built-in Chromium based browser.
+
 ## Installation
 
 Clone this repository:
