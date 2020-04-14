@@ -4,7 +4,11 @@
 
 Clone this repository:
 
-`git clone https://github.com/psev/sakai-cypress-tests`
+`git clone https://github.com/psev/sakai-cypress-test`
+
+Move into the cloned repository:
+
+`cd sakai-cypress-test`
 
 Then, install dependencies:
 
