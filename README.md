@@ -33,6 +33,7 @@ To run Cypress in headless mode and only for a specific version, run:
 ```gherkin
 Feature: This is an example feature
 
+  @sakai-20
   @site
   Scenario: This is an example scenario
     Given I am the instructor
