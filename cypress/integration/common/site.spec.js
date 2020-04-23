@@ -3,7 +3,7 @@ import { Then, Before, After } from 'cypress-cucumber-preprocessor/steps';
 import { login, logout } from './login.spec.js';
 import { createUser, removeUser } from './user.spec.js';
 
-export const STATE = { };
+import { STATE } from './state.spec.js';
 
 export function createSite(sitename) {
   cy.get('[title^="Worksite Setup"]').click();
@@ -45,7 +45,7 @@ export function addUserToSite(username, sitename, type) {
 }
 
 export function goToSite(sitename) {
-  cy.visit('https://qa20-mysql.nightly.sakaiproject.org/portal');
+  cy.visit(STATE.host);
   cy.get('.all-sites-icon').last().click();
   cy.get('#txtSearch').type(sitename);
   cy.get(`[title^="${sitename}"]`).last().click();

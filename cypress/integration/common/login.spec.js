@@ -1,7 +1,9 @@
 import { Given, Then, And, Before, After } from 'cypress-cucumber-preprocessor/steps';
 
+import { STATE } from './state.spec.js';
+
 export function login(username) {
-  cy.visit('https://qa20-mysql.nightly.sakaiproject.org/portal');
+  cy.visit(STATE.host);
   cy.get('#eid').type(username);
   cy.get('#pw').type(username);
   cy.get('#submit').click();

@@ -22,6 +22,10 @@ To open Cypress, run:
 
 `npm run cypress:open`
 
+To run Cypress in headless mode and only for a specific version, run:
+
+`./node_modules/.bin/cypress-tags run -e TAGS='@sakai-20'`
+
 ## Testing
 
 ### Basic Example
