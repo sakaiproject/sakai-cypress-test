@@ -43,12 +43,19 @@ Feature: This is an example feature
     Then logout
 ```
 
-### Annotations
+### Tags
+
+#### General
 
 - `@admin`
   - Login as _admin_.
 - `@site`
   - Create a temporary site and its users.
+
+#### Versions
+
+- `@sakai-20`
+  - Uses `https://qa20-mysql.nightly.sakaiproject.org`.
 
 ### Instructions
 
