@@ -45,7 +45,7 @@ export function addUserToSite(username, sitename, type) {
 }
 
 export function goToSite(sitename) {
-  cy.visit(STATE.host);
+  cy.visit('/portal');
   cy.get('.all-sites-icon').last().click();
   cy.get('#txtSearch').type(sitename);
   cy.get(`[title^="${sitename}"]`).last().click();
@@ -55,7 +55,7 @@ Before({ tags: '@site' }, function() {
   STATE.sitename = `cypress-${uuid4().split('-')[0]}`;
   STATE.instructor = `cypress-instructor-${uuid4()}`;
   STATE.student = `cypress-student-${uuid4()}`;
-  login('admin');
+  login(Cypress.env('ADMIN_USERNAME'), Cypress.env('ADMIN_PASSWORD'));
   createSite(STATE.sitename);
   createUser(STATE.instructor, 'maintain');
   createUser(STATE.student);
@@ -65,7 +65,7 @@ Before({ tags: '@site' }, function() {
 });
 
 After({ tags: '@site' }, function() {
-  login('admin');
+  login(Cypress.env('ADMIN_USERNAME'), Cypress.env('ADMIN_PASSWORD'));
   deleteSite(STATE.sitename);
   delete STATE.sitename;
   removeUser(STATE.instructor);

@@ -1,3 +1,8 @@
 {
-  "testFiles": "**/*.feature"
+  "testFiles": "**/*.feature",
+  "baseUrl": "https://qa20-mysql.nightly.sakaiproject.org",
+  "env": {
+    "ADMIN_USERNAME": "admin",
+    "ADMIN_PASSWORD": "admin"
+  }
 }
